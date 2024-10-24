@@ -29,3 +29,8 @@
     contribution-count: uint
   }
 )
+
+;; Check if user is registered
+(define-read-only (is-user-registered (user principal))
+  (is-some (map-get? Users user)))
+
