@@ -68,3 +68,10 @@
   (let ((rewards (calculate-rewards amount)))
     (update-user-rewards user rewards)
     rewards))
+
+;; Get pending rewards
+(define-read-only (get-pending-rewards (user principal))
+  (let ((user-data (unwrap-panic (map-get? Users user))))
+    (if (get is-active user-data)
+        (calculate-rewards (get compute-power user-data))
+        u0)))
