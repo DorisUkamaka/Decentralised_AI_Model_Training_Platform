@@ -34,3 +34,13 @@
 (define-read-only (is-user-registered (user principal))
   (is-some (map-get? Users user)))
 
+;; Get user's contribution count
+(define-read-only (get-contribution-count (user principal))
+  (get contribution-count (default-to 
+    {last-contribution: u0, contribution-count: u0}
+    (map-get? Contributions user))))
+
+(define-read-only (get-user-total-rewards (user principal))
+  (get total-rewards (default-to 
+    {compute-power: u0, total-rewards: u0, is-active: false, registration-time: u0}
+    (map-get? Users user))))
