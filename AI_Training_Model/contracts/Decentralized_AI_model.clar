@@ -117,3 +117,29 @@
         (ok u0))))
 
 
+;; Admin Functions
+
+;; Update minimum contribution requirement
+(define-public (set-minimum-contribution (new-minimum uint))
+  (begin
+    (asserts! (is-eq tx-sender contract-owner) err-owner-only)
+    (var-set minimum-contribution new-minimum)
+    (ok true)))
+
+;; Update reward rate
+(define-public (set-reward-rate (new-rate uint))
+  (begin
+    (asserts! (is-eq tx-sender contract-owner) err-owner-only)
+    (var-set reward-rate new-rate)
+    (ok true)))
+
+;; Deactivate user
+(define-public (deactivate-user (user principal))
+  (begin
+    (asserts! (is-eq tx-sender contract-owner) err-owner-only)
+    (let ((current-data (unwrap-panic (map-get? Users user))))
+      (map-set Users user (merge current-data {
+        is-active: false
+      }))
+      (ok true))))
+
