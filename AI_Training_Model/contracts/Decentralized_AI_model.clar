@@ -12,3 +12,20 @@
 (define-data-var minimum-contribution uint u100)
 (define-data-var reward-rate uint u10)  ;; tokens per compute unit
 (define-data-var total-compute-power uint u0)
+
+;; Data Maps
+(define-map Users principal 
+  {
+    compute-power: uint,
+    total-rewards: uint,
+    is-active: bool,
+    registration-time: uint
+  }
+)
+
+(define-map Contributions principal 
+  {
+    last-contribution: uint,
+    contribution-count: uint
+  }
+)
