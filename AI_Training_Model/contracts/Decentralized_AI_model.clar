@@ -75,3 +75,17 @@
     (if (get is-active user-data)
         (calculate-rewards (get compute-power user-data))
         u0)))
+
+;; Register new user
+(define-public (register-user)
+  (let ((user tx-sender))
+    (if (is-user-registered user)
+        err-already-registered
+        (begin
+          (map-set Users user {
+            compute-power: u0,
+            total-rewards: u0,
+            is-active: true,
+            registration-time: block-height
+          })
+          (ok true)))))
