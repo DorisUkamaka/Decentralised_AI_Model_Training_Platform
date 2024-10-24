@@ -44,3 +44,10 @@
   (get total-rewards (default-to 
     {compute-power: u0, total-rewards: u0, is-active: false, registration-time: u0}
     (map-get? Users user))))
+
+(define-private (update-user-compute-power (user principal) (amount uint))
+  (let ((current-data (unwrap-panic (map-get? Users user))))
+    (map-set Users user (merge current-data {
+      compute-power: (+ (get compute-power current-data) amount)
+    }))
+    (var-set total-compute-power (+ (var-get total-compute-power) amount))))
